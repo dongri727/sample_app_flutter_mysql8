@@ -13,12 +13,15 @@ class SelectPage extends StatefulWidget {
 
 class _SelectPageState extends State<SelectPage> {
   //今回は国別に絞り込んでいる。ここの自由度も上げたい。
-  var targetCountry = ''; // WHERE term
   var selectedId = '';
   var selectedYear = '';
   var selectedName = '';
   var selectedCountry = '';
-
+  var targetColumn1 = '';
+  var targetColumn2 = '';
+  var searchTerm1 = '';
+  var searchTerm2 = '';
+  var logique = '';
 
 
   Future<void> _select() async {
@@ -40,7 +43,8 @@ class _SelectPageState extends State<SelectPage> {
     print("Connected");
 
     // make query
-    var result = await conn.execute("SELECT * FROM timeline WHERE country = '$targetCountry'");
+    var result = await conn.execute(
+        "SELECT * FROM timeline WHERE $targetColumn1 = '$searchTerm1' $logique $targetColumn2 = '$searchTerm2' ORDER BY year");
 
     // print some result data
     print(result.numOfColumns);
@@ -81,11 +85,47 @@ class _SelectPageState extends State<SelectPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Padding(
-                padding: const EdgeInsets.all(30.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Format(
-                  hintText: "country",
+                  hintText: "column1",
                   onChanged: (text) {
-                    targetCountry = text;
+                    targetColumn1 = text;
+                  },
+                )
+            ),
+            Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Format(
+                  hintText: "column2",
+                  onChanged: (text) {
+                    targetColumn1 = text;
+                  },
+                )
+            ),
+            Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Format(
+                  hintText: "and / or",
+                  onChanged: (text) {
+                    logique = text;
+                  },
+                )
+            ),
+            Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Format(
+                  hintText: "search term 1",
+                  onChanged: (text) {
+                    searchTerm1 = text;
+                  },
+                )
+            ),
+            Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Format(
+                  hintText: "search term 2",
+                  onChanged: (text) {
+                    searchTerm2 = text;
                   },
                 )
             ),
