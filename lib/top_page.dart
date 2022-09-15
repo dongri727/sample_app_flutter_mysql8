@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'delete_page.dart';
 import 'insert_page.dart';
+import 'read_all_page.dart';
 import 'select_page.dart';
 import 'update_page.dart';
 
@@ -23,6 +24,22 @@ class TopPage extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.brown,
                       fontSize: 24,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: OutlinedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ReadAllPage(title: 'Flutter MySQL Insert Sample'),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      "Read All Page",
                     ),
                   ),
                 ),

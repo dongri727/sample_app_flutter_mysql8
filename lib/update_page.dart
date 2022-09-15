@@ -96,10 +96,10 @@ class _UpdatePageState extends State<UpdatePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: _update,
         tooltip: 'update',
-        child: const Icon(Icons.add),
+        label: const Text("update"),
       ),
     );
   }

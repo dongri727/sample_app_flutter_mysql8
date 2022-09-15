@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mysql_client/mysql_client.dart';
 
 import 'domain/format.dart';
+import 'update_page.dart';
 
 class SelectPage extends StatefulWidget {
   const SelectPage({Key? key,required this.title}) : super(key: key);
@@ -54,7 +55,7 @@ class _SelectPageState extends State<SelectPage> {
     List<Map<String, String>> list = [];
     for (final row in result.rows) {
       final data = {
-        //'selectedId': row.colAt(0)!;
+        'selectedId': row.colAt(0)!,
         'selectedYear': row.colAt(1)!,
         'selectedName': row.colAt(2)!,
         'selectedCountry': row.colAt(3)!,
@@ -86,82 +87,93 @@ class _SelectPageState extends State<SelectPage> {
         title: Text(widget.title),
       ),
       body: Column(
-        children: [
-        Expanded(
-          flex: 2,
-          child: Column(
-            children: <Widget>[
-              Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Format(
-                    hintText: "column1",
-                    onChanged: (text) {
-                      targetColumn1 = text;
-                    },
-                  )
-              ),
-              Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Format(
-                    hintText: "column2",
-                    onChanged: (text) {
-                      targetColumn1 = text;
-                    },
-                  )
-              ),
-              Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Format(
-                    hintText: "and / or",
-                    onChanged: (text) {
-                      logique = text;
-                    },
-                  )
-              ),
-              Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Format(
-                    hintText: "search term 1",
-                    onChanged: (text) {
-                      searchTerm1 = text;
-                    },
-                  )
-              ),
-              Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Format(
-                    hintText: "search term 2",
-                    onChanged: (text) {
-                      searchTerm2 = text;
-                    },
-                  )
-              ),
-              ]),
-        ),
-              Expanded(
-                  flex: 3,
-                  child: SingleChildScrollView(
-                    child:
-                    Column(children: displayList.map<Widget>((data) {
-                      return Card(
-                        child: ListTile(
-                          leading: Text(data['selectedYear']?? ""),
-                          title: Text(data['selectedName']?? ""),
-                          trailing: Text(data['selectedCountry']?? ""),
-                        ),
-                      );
-                    }
-                    ).toList()
+          children:[
+            Expanded(
+              flex: 2,
+              child: Column(
+                  children: <Widget>[
+                    Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Format(
+                          hintText: "column1",
+                          onChanged: (text) {
+                            targetColumn1 = text;
+                          },
+                        )
                     ),
-              ),
-          ),
-        ]),
+                    Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Format(
+                          hintText: "search term 1",
+                          onChanged: (text) {
+                            searchTerm1= text;
+                          },
+                        )
+                    ),
 
-      floatingActionButton: FloatingActionButton(
+                    Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Format(
+                          hintText: "and / or",
+                          onChanged: (text) {
+                            logique = text;
+                          },
+                        )
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Format(
+                          hintText: "column2",
+                          onChanged: (text) {
+                            targetColumn2 = text;
+                          },
+                        )
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Format(
+                          hintText: "search term 2",
+                          onChanged: (text) {
+                            searchTerm2= text;
+                          },
+                        )
+                    ),
+                  ]),
+            ),
+            Expanded(
+              flex: 3,
+              child: SingleChildScrollView(
+                child:
+                Column(children: displayList.map<Widget>((data) {
+                  return Card(
+                      child: ListTile(
+                        leading: Text(data['selectedYear']?? ""),
+                        title: Text(data['selectedName']?? ""),
+                        subtitle: Text(data['selectedCountry']?? ""),
+                        trailing: TextButton(
+                          child: const Text("update"),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => UpdatePage(title: data['selectedId']?? "")),
+                            );
+                          },
+                        ),
+                      )
+                  );
+                }
+                ).toList()
+                ),
+              ),
+            ),
+          ]),
+
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: _select,
         tooltip: 'select',
-        child: const Icon(Icons.add),
+        label: const Text("select"),
       ),
     );
   }
 }
+

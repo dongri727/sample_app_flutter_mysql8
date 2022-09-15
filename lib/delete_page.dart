@@ -71,10 +71,10 @@ class _DeletePageState extends State<DeletePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: _delete,
         tooltip: 'delete',
-        child: const Icon(Icons.add),
+        label: const Text("delete"),
       ),
     );
   }

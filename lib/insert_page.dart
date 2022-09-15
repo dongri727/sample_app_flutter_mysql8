@@ -98,10 +98,10 @@ class _InsertPageState extends State<InsertPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: _insert,
         tooltip: 'insert',
-        child: const Icon(Icons.add),
+        label: const Text("insert"),
       ),
     );
   }
